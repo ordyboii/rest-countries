@@ -1,0 +1,41 @@
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  background-color: var(--themeElement);
+  padding-block: 1.2rem;
+  padding-left: 2rem;
+  padding-right: 8rem;
+  box-shadow: var(--elevation);
+  border-radius: var(--radius);
+}
+
+.search-box:focus-within {
+  outline: 1px solid;
+}
+
+.search-box :where(input) {
+  background-color: transparent;
+  border: 0;
+  outline: none;
+}
+
+.card {
+  --flowSpace: 0.6rem;
+
+  display: grid;
+  gap: 1rem;
+  height: 100%;
+  background-color: var(--themeElement);
+  box-shadow: var(--elevation);
+}
+
+.card :where(img) {
+  width: 100%;
+  max-height: 7.5rem;
+  object-fit: cover;
+}
+
+.card :where(div) {
+  padding: 1.4rem;
+}

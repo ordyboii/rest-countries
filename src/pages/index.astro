@@ -1,0 +1,12 @@
+---
+import Layout from "../components/layout.astro";
+import Countries from "../components/countries";
+
+const countries = await fetch("https://restcountries.com/v3.1/all").then(
+  r => r.json() as unknown as Country[]
+);
+---
+
+<Layout>
+  <Countries countries={countries} client:visible />
+</Layout>

@@ -1,0 +1,18 @@
+---
+import ThemeButton from "./theme-button";
+---
+
+<header>
+  <div class='flex-between container'>
+    <h1>Where in the world?</h1>
+    <ThemeButton client:visible />
+  </div>
+</header>
+
+<style is:global>
+  header {
+    background-color: var(--themeElement);
+    box-shadow: var(--elevation);
+    padding-block: 0.8rem;
+  }
+</style>

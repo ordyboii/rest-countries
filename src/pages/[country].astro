@@ -1,0 +1,107 @@
+---
+import Layout from "../components/layout.astro";
+
+const countryRes = await fetch(
+  `https://restcountries.com/v3.1/name/${Astro.params.country}?fullText=true`
+).then(r => r.json() as unknown as Country[]);
+
+const country = countryRes[0];
+
+const nativeNames = country?.name.nativeName
+  ? Object.values(country?.name.nativeName)
+      .map(key => key.official)
+      .join(", ")
+  : "None";
+
+const languages = country?.languages
+  ? Object.values(country?.languages).join(", ")
+  : "None";
+
+const currencies = country?.currencies
+  ? Object.values(country?.currencies)
+      .map(key => key.name)
+      .join(", ")
+  : "None";
+
+const borders = country?.borders
+  ? await fetch(
+      `https://restcountries.com/v2/alpha?codes=${country?.borders.join(",")}`
+    ).then(r => r.json() as unknown as Country[])
+  : false;
+---
+
+<Layout>
+  <section class='region'>
+    <a href='/' class='button' data-variant='primary'>
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        fill='none'
+        viewBox='0 0 24 24'
+        stroke-width='1.5'
+        stroke='currentColor'
+      >
+        <path
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          d='M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18'></path>
+      </svg>
+      <p>Back</p>
+    </a>
+  </section>
+
+  <section class='country region even-grid'>
+    <img src={country?.flags.png} alt={`${country?.flags.png} flag`} />
+    <article>
+      <h2>{country?.name.common}</h2>
+      <div class='even-grid'>
+        <div class='flow'>
+          <p><strong>Native Name:</strong> {nativeNames}</p>
+          <p><strong>Population:</strong> {country?.population}</p>
+          <p><strong>Region:</strong> {country?.region}</p>
+          <p><strong>Sub Region:</strong> {country?.subregion}</p>
+          <p><strong>Capital:</strong> {country?.capital}</p>
+        </div>
+        <div class='flow'>
+          <p><strong>Top Level Domain:</strong> {country?.tld}</p>
+          <p><strong>Currencies:</strong> {currencies}</p>
+          <p><strong>Languages:</strong> {languages}</p>
+        </div>
+      </div>
+      {
+        borders && (
+          <div class='flex-auto'>
+            <strong>Border Countries:</strong>
+            {borders.map(border => (
+              <div class='border-country'>{border.name}</div>
+            ))}
+          </div>
+        )
+      }
+    </article>
+  </section>
+</Layout>
+
+<style is:global>
+  .country {
+    --evenGridGap: clamp(2rem, 4vw, 4rem);
+    --flowSpace: 0.4rem;
+  }
+
+  .country :where(img) {
+    width: 100%;
+    max-height: 50vh;
+    object-fit: cover;
+  }
+  .country :where(article) {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .border-country {
+    padding: 0.4rem 1.8rem;
+    border-radius: var(--radius);
+    font-weight: var(--fwSemiBold);
+    background-color: var(--themeElement);
+    box-shadow: var(--elevation);
+  }
+</style>

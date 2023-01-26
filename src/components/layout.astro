@@ -1,0 +1,195 @@
+---
+import "@fontsource/nunito-sans/300.css";
+import "@fontsource/nunito-sans/600.css";
+import "@fontsource/nunito-sans/800.css";
+import Header from "./header.astro";
+---
+
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='viewport' content='width=device-width' />
+    <title>Rest Countries</title>
+  </head>
+  <body data-theme='light'>
+    <Header />
+    <main class='container'>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  /* DESIGN TOKENS */
+
+  :root {
+    --neutralOne: hsl(0, 0%, 100%);
+    --neutralTwo: hsl(0, 0%, 98%);
+    --neutralThree: hsl(0, 0%, 52%);
+    --neutralEight: hsl(207, 26%, 17%);
+    --neutralSeven: hsl(209, 23%, 22%);
+    --neutralNine: hsl(200, 15%, 8%);
+
+    --ffDefault: "Nunito Sans", sans-serif;
+
+    --fwLight: 300;
+    --fwSemiBold: 600;
+    --fwExtraBold: 800;
+
+    --themeText: var(--neutralNine);
+    --themeBg: var(--neutralTwo);
+    --themeElement: var(--neutralOne);
+
+    --elevation: 0px 4px 6px hsl(0 0% 8% / 0.1);
+    --radius: 0.4rem;
+    --transition: ease 150ms;
+  }
+
+  /* RESET */
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select,
+  a {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* COMPOSITION */
+
+  body {
+    font-family: var(--ffDefault);
+    font-weight: var(--fwLight);
+    line-height: 1.5;
+    isolation: isolate;
+    color: var(--themeText);
+    background-color: var(--themeBg);
+  }
+
+  body[data-theme="dark"] {
+    --themeText: var(--neutralOne);
+    --themeBg: var(--neutralEight);
+    --themeElement: var(--neutralSeven);
+  }
+
+  svg {
+    width: 1.2em;
+  }
+
+  h1,
+  h2,
+  h3 {
+    line-height: 1;
+    font-weight: var(--fwExtraBold);
+  }
+
+  h1 {
+    font-size: clamp(1.7rem, 4vw, 1.9rem);
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 4vw, 1.7rem);
+  }
+
+  h3 {
+    font-size: clamp(1.2rem, 4vw, 1.4rem);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  button {
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+
+  .container {
+    max-width: var(--containerWidth, 1200px);
+    margin-inline: auto;
+    padding: var(--containerPadding, 1rem);
+  }
+
+  .flow :where(:not(:first-child)) {
+    margin-top: var(--flowSpace, 1rem);
+  }
+
+  .flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--flexBetweenGap, 1rem);
+  }
+
+  .flex-auto {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--flexAutoGap, 1rem);
+  }
+
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--flexCenterGap, 1rem);
+  }
+
+  .auto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--min, 14rem), 1fr));
+    gap: var(--autoGridGap, 5rem);
+  }
+
+  .even-grid {
+    display: grid;
+    grid-template-columns: var(--columns, 1fr);
+    gap: var(--evenGridGap, 1rem);
+  }
+
+  .region {
+    padding-block: var(--regionPadding, 1rem);
+  }
+
+  @media (min-width: 50em) {
+    .even-grid {
+      --columns: 1fr 1fr;
+    }
+    .region {
+      --regionPadding: 2rem;
+    }
+  }
+</style>
