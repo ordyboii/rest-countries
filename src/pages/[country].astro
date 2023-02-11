@@ -1,5 +1,16 @@
 ---
+import type { GetStaticPaths } from "astro";
 import Layout from "../components/layout.astro";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const countries = await fetch("https://restcountries.com/v3.1/all").then(
+    r => r.json() as unknown as Country[]
+  );
+
+  return countries.map(c => ({
+    params: { country: c.name.common }
+  }));
+};
 
 const countryRes = await fetch(
   `https://restcountries.com/v3.1/name/${Astro.params.country}?fullText=true`
@@ -81,7 +92,7 @@ const borders = country?.borders
   </section>
 </Layout>
 
-<style is:global>
+<style>
   .country {
     --evenGridGap: clamp(2rem, 4vw, 4rem);
     --flowSpace: 0.4rem;
