@@ -11,13 +11,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^5.0.0",
+    "@fontsource/nunito-sans": "^4.5.10",
     "@astrojs/preact": "^2.0.0",
     "astro": "^2.0.1",
     "preact": "^10.11.3"
   },
   "devDependencies": {
-    "@fontsource/nunito-sans": "^4.5.10",
     "prettier": "^2.8.3",
     "prettier-plugin-astro": "^0.7.2"
   }
