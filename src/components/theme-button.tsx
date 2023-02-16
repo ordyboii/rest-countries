@@ -1,15 +1,15 @@
 import "./button.css";
-import { useState, useEffect } from "preact/hooks";
+import { createEffect, createSignal } from "solid-js";
 
 export default function ThemeButton() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = createSignal(false);
 
-  useEffect(() => {
+  createEffect(() => {
     if (localStorage.getItem("theme") === "dark") {
       setDark(true);
       document.body.setAttribute("data-theme", "dark");
     }
-  }, []);
+  });
 
   return (
     <button
@@ -27,7 +27,7 @@ export default function ThemeButton() {
         }
       }}
     >
-      {dark ? (
+      {dark() ? (
         <svg
           xmlns='http://www.w3.org/2000/svg'
           fill='none'
@@ -58,7 +58,7 @@ export default function ThemeButton() {
           ></path>
         </svg>
       )}
-      {dark ? "Light Mode" : "Dark Mode"}
+      {dark() ? "Light Mode" : "Dark Mode"}
     </button>
   );
 }

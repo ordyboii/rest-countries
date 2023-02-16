@@ -2,7 +2,7 @@
   position: relative;
 }
 
-.dropdown :where(button) {
+.dropdown > button {
   background-color: var(--themeElement);
   padding: 1.2rem 2rem;
   display: flex;
@@ -12,23 +12,23 @@
   border-radius: var(--radius);
 }
 
-.dropdown :where(ul) {
+[role="menu"] {
   position: absolute;
   top: 4.5rem;
   left: 0;
   width: 100%;
   background-color: var(--themeElement);
   display: grid;
-  text-align: left;
   box-shadow: var(--elevation);
   border-radius: var(--radius);
 }
 
-.dropdown :where(li) {
+[role="menuitem"] {
+  text-align: left;
   padding: 1rem 1.4rem;
   cursor: pointer;
 }
 
-.dropdown :where(li:where(:hover, :focus, .is-selected)) {
+[role="menuitem"]:is(:hover, :focus, [data-selected="true"]) {
   background-color: var(--themeBg);
 }

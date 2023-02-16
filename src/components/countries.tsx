@@ -1,5 +1,5 @@
 import "./countries.css";
-import { useState } from "preact/hooks";
+import { createMemo, createSignal } from "solid-js";
 import Dropdown from "./dropdown";
 
 type CardProps = {
@@ -30,19 +30,23 @@ type CountriesProps = {
 };
 
 export default function Countries({ countries }: CountriesProps) {
-  const [query, setQuery] = useState("");
-  const [option, setOption] = useState("");
+  const [query, setQuery] = createSignal("");
+  const [option, setOption] = createSignal("");
 
-  const filteredCountries = countries.filter(country => {
-    if (option.length > 0) {
-      return (
-        country.region.toLowerCase().includes(option.toLowerCase()) &&
-        country.name.common.toLowerCase().includes(query.toLowerCase())
-      );
-    } else {
-      return country.name.common.toLowerCase().includes(query.toLowerCase());
-    }
-  });
+  const filteredCountries = createMemo(() =>
+    countries.filter(country => {
+      if (option().length > 0) {
+        return (
+          country.region.toLowerCase().includes(option().toLowerCase()) &&
+          country.name.common.toLowerCase().includes(query().toLowerCase())
+        );
+      } else {
+        return country.name.common
+          .toLowerCase()
+          .includes(query().toLowerCase());
+      }
+    })
+  );
 
   return (
     <>
@@ -67,7 +71,7 @@ export default function Countries({ countries }: CountriesProps) {
             id='search-box'
             name='search-box'
             placeholder='Search for a country...'
-            value={query}
+            value={query()}
             onInput={e => setQuery(e.currentTarget.value)}
           />
         </form>
@@ -76,7 +80,7 @@ export default function Countries({ countries }: CountriesProps) {
       </section>
 
       <section class='region auto-grid'>
-        {filteredCountries.map(country => (
+        {filteredCountries().map(country => (
           <Card country={country} />
         ))}
       </section>
